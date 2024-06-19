@@ -10,13 +10,10 @@ public class ConsumoAPI {
 
     public String obtenerDatos(String url) {
 
-        //averiguar el uso de la clase URLEncoder para corregir los espacios en blanco de la URL
-        String direction = "https://swapi.dev/api/films/" + url;
-
         //instancias para hacer la peticion
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(direction))
+                .uri(URI.create(url))
                 .build();
 
         HttpResponse<String> response = null;
@@ -29,7 +26,7 @@ public class ConsumoAPI {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
+        // realmente es un string?
         String json = response.body();
         return json;
     }
