@@ -1,6 +1,8 @@
 package com.ausadev.screenmatch;
 
+import com.ausadev.screenmatch.model.DatosSerie;
 import com.ausadev.screenmatch.service.ConsumoAPI;
+import com.ausadev.screenmatch.service.ConvierteDatos;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,5 +21,10 @@ public class ScreenmatchApplication implements CommandLineRunner {
 //		var json = consumoApi.obtenerDatos("https://api.themoviedb.org/3/movie/top_rated?api_key=223af92cc732da1c02b1cde6cb997b6e");
 
 		System.out.println(json);
+
+		ConvierteDatos convierteDatos = new ConvierteDatos();
+		var datos = convierteDatos.obtenerDatos(json, DatosSerie.class);
+
+		System.out.println(datos);
 	}
 }
