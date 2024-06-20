@@ -1,5 +1,6 @@
 package com.ausadev.screenmatch;
 
+import com.ausadev.screenmatch.model.DatosEpisodio;
 import com.ausadev.screenmatch.model.DatosSerie;
 import com.ausadev.screenmatch.service.ConsumoAPI;
 import com.ausadev.screenmatch.service.ConvierteDatos;
@@ -17,7 +18,7 @@ public class ScreenmatchApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		var consumoApi = new ConsumoAPI();
-		var json = consumoApi.obtenerDatos("http://www.omdbapi.com/?t=game+of+thrones&apikey=364e5920");
+		var json = consumoApi.obtenerDatos("http://www.omdbapi.com/?t=game%2Bof%2Bthrones&apikey=364e5920&season=1&episode=1");
 //		var json = consumoApi.obtenerDatos("https://api.themoviedb.org/3/movie/top_rated?api_key=223af92cc732da1c02b1cde6cb997b6e");
 
 		System.out.println(json);
@@ -26,5 +27,11 @@ public class ScreenmatchApplication implements CommandLineRunner {
 		var datos = convierteDatos.obtenerDatos(json, DatosSerie.class);
 
 		System.out.println(datos);
+
+		json = consumoApi.obtenerDatos("http://www.omdbapi.com/?t=game%2Bof%2Bthrones&apikey=364e5920&season=1&episode=1");
+
+		DatosEpisodio episodio = convierteDatos.obtenerDatos(json, DatosEpisodio.class);
+
+		System.out.println(episodio);
 	}
 }
