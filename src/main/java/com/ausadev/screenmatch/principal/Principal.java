@@ -1,9 +1,12 @@
 package com.ausadev.screenmatch.principal;
 
 import com.ausadev.screenmatch.model.DatosSerie;
+import com.ausadev.screenmatch.model.DatosTemporadas;
 import com.ausadev.screenmatch.service.ConsumoAPI;
 import com.ausadev.screenmatch.service.ConvierteDatos;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
@@ -13,7 +16,7 @@ public class Principal {
     ConsumoAPI consumoApi = new ConsumoAPI();
     ConvierteDatos convierteDatos = new ConvierteDatos();
 
-    private void mostrarMenu() {
+    public void mostrarMenu() {
         System.out.println("Ingrese el nombre de la seria a buscar");
         var nombre = teclado.nextLine();
 
@@ -22,5 +25,13 @@ public class Principal {
         var datos = convierteDatos.obtenerDatos(json, DatosSerie.class);
         System.out.println(datos);
 
+        // obtengo los datos de cada capitulo de cada serie
+        List<DatosTemporadas> temporadas = new ArrayList<>();
+        for (int i = 1; i < datos.totalDeTemporadas(); i++) {
+            json = consumoApi.obtenerDatos(URL_BASE + nombre.replace(" ", "+") + "&Season=" + i + API_KEY);
+            var datosTemporadas = convierteDatos.obtenerDatos(json, DatosTemporadas.class);
+            temporadas.add(datosTemporadas);
+        }
+        temporadas.forEach(System.out::println);
     }
 }
