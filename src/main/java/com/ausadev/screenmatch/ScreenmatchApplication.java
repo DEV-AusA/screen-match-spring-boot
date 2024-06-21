@@ -3,6 +3,7 @@ package com.ausadev.screenmatch;
 import com.ausadev.screenmatch.model.DatosEpisodio;
 import com.ausadev.screenmatch.model.DatosSerie;
 import com.ausadev.screenmatch.model.DatosTemporadas;
+import com.ausadev.screenmatch.principal.EjemploStreamYLambda;
 import com.ausadev.screenmatch.principal.Principal;
 import com.ausadev.screenmatch.service.ConsumoAPI;
 import com.ausadev.screenmatch.service.ConvierteDatos;
@@ -24,5 +25,9 @@ public class ScreenmatchApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Principal principal = new Principal();
 		principal.mostrarMenu();
+
+//		//EJEMPLO DE STREAM CON LAMBDA
+//		EjemploStreamYLambda nombres = new EjemploStreamYLambda();
+//		nombres.muestraEjemplo();
 	}
 }
