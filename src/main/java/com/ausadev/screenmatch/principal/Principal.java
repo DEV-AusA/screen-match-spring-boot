@@ -3,6 +3,7 @@ package com.ausadev.screenmatch.principal;
 import com.ausadev.screenmatch.model.DatosEpisodio;
 import com.ausadev.screenmatch.model.DatosSerie;
 import com.ausadev.screenmatch.model.DatosTemporadas;
+import com.ausadev.screenmatch.model.Episodio;
 import com.ausadev.screenmatch.service.ConsumoAPI;
 import com.ausadev.screenmatch.service.ConvierteDatos;
 
@@ -54,7 +55,7 @@ public class Principal {
         //convirtiendo las listas de temporadas en una lista de todos los episodios
         List<DatosEpisodio> datosEpisodios = temporadas.stream()
                 .flatMap(t -> t.episodios().stream())
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
 
         //mostrando top5
         System.out.println("Este es el top 5 con mas puntaje de episodios: ");
@@ -63,5 +64,14 @@ public class Principal {
                 .sorted(Comparator.comparing(DatosEpisodio::evaluacion).reversed())
                 .limit(5)
                 .forEach(System.out::println);
+
+        //convirtiendo los datos a una Lista de tipo clase Episodio
+        List<Episodio> episodios = temporadas.stream()
+                // convierte cada temporada a una Lista de Episodio
+                .flatMap(t -> t.episodios().stream()
+                        .map(d -> new Episodio(t.numero(), d)))
+                .collect(Collectors.toList());
+
+        episodios.forEach(System.out::println);
     }
 }
