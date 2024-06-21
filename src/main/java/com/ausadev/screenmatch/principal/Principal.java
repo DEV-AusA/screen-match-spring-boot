@@ -7,8 +7,10 @@ import com.ausadev.screenmatch.service.ConsumoAPI;
 import com.ausadev.screenmatch.service.ConvierteDatos;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
     Scanner teclado = new Scanner(System.in);
@@ -48,5 +50,18 @@ public class Principal {
 
         //simplificando en UNA LINEA con la function lambda
         temporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
+
+        //convirtiendo las listas de temporadas en una lista de todos los episodios
+        List<DatosEpisodio> datosEpisodios = temporadas.stream()
+                .flatMap(t -> t.episodios().stream())
+                .collect(Collectors.toUnmodifiableList());
+
+        //mostrando top5
+        System.out.println("Este es el top 5 con mas puntaje de episodios: ");
+        datosEpisodios.stream()
+                .filter(e -> !e.evaluacion().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(DatosEpisodio::evaluacion).reversed())
+                .limit(5)
+                .forEach(System.out::println);
     }
 }
