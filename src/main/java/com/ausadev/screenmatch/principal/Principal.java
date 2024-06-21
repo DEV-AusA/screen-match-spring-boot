@@ -1,5 +1,6 @@
 package com.ausadev.screenmatch.principal;
 
+import com.ausadev.screenmatch.model.DatosEpisodio;
 import com.ausadev.screenmatch.model.DatosSerie;
 import com.ausadev.screenmatch.model.DatosTemporadas;
 import com.ausadev.screenmatch.service.ConsumoAPI;
@@ -27,11 +28,25 @@ public class Principal {
 
         // obtengo los datos de cada capitulo de cada serie
         List<DatosTemporadas> temporadas = new ArrayList<>();
-        for (int i = 1; i < datos.totalDeTemporadas(); i++) {
+        for (int i = 1; i <= datos.totalDeTemporadas(); i++) {
             json = consumoApi.obtenerDatos(URL_BASE + nombre.replace(" ", "+") + "&Season=" + i + API_KEY);
             var datosTemporadas = convierteDatos.obtenerDatos(json, DatosTemporadas.class);
             temporadas.add(datosTemporadas);
         }
         temporadas.forEach(System.out::println);
+
+//        //limpiando los datos mostrados
+//        for (int i = 0; i < datos.totalDeTemporadas(); i++) {
+//            //declaro la lista y como valor mediante el valor de "i" como indice dle metodo get()
+//            List<DatosEpisodio> episodiosTemporada = temporadas.get(i).episodios();
+//            //uso otro "for" y como valor de iteracion uso el metodo .size pra obtener la cantidad de episodios
+//            for (int j = 0; j < episodiosTemporada.size(); j++) {
+//                //muestro el titulo de cada capitulo
+//                System.out.println(episodiosTemporada.get(j).titulo());
+//            }
+//        }
+
+        //simplificando en UNA LINEA con la function lambda
+        temporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
     }
 }
