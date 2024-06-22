@@ -3,8 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-NOTAS trabajando con lambdas, streams y Spring Framework.md
-NOTAS persistencia de datos y consultas con Spring Data JPA.md
+/NOTAS/
 
 ### STS ###
 .apt_generated
