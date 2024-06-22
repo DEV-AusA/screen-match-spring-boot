@@ -109,5 +109,26 @@ public class Principal {
             System.out.println("Titulo no encontrado");
         }
 
+        // Mapeando datos por evaluaciones por temporada
+        Map<Integer, Double> evaluacionesPorTemporada = episodios.stream()
+                //evaluaciones mayores a 0
+                .filter(e -> e.getEvaluacion() > 0.0)
+                .collect(Collectors.groupingBy(Episodio::getTemporada,
+                        Collectors.averagingDouble(Episodio::getEvaluacion)
+                ));
+        System.out.println("Evaluaciones de cada temporada: " + evaluacionesPorTemporada);
+
+        //Obtener las estadisticas de la Serie, dato de tipo DoubleSummaryStadistics
+        DoubleSummaryStatistics est = episodios.stream()
+                .filter(e -> e.getEvaluacion() > 0.0)
+                //uso .summarisizingDouble para crear la estadisticas de cada episodio
+                .collect(Collectors.summarizingDouble(Episodio::getEvaluacion));
+        //mostrando todas las estadisticas
+        System.out.println("Estadisticas TOTALES: " + est);
+        // mostrando por separado y mas bonito
+        System.out.println("Media de las evaluaciones: " + est.getAverage());
+        System.out.println("Episodio mejor evaluado: " + est.getMax());
+        System.out.println("Episodio peor evaluado: " + est.getMin());
+
     }
 }
