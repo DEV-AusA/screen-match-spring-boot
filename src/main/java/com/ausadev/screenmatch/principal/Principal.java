@@ -7,6 +7,8 @@ import com.ausadev.screenmatch.model.Episodio;
 import com.ausadev.screenmatch.service.ConsumoAPI;
 import com.ausadev.screenmatch.service.ConvierteDatos;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -73,5 +75,22 @@ public class Principal {
                 .collect(Collectors.toList());
 
         episodios.forEach(System.out::println);
+
+        //buscando episodios por fecha ingresada
+        System.out.println("Ingrese el año de filtrado");
+        var fecha = teclado.nextInt();
+
+        // LocalDate.of() recieb 3 parametros yyyy-MM-dd
+        LocalDate fechaBusqueda = LocalDate.of(fecha, 1, 1);
+        //formateando la fecha a tipo LATAM dd-MM-yyyy con el metodo DateTimeFormatter.ofPattern()
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        episodios.stream()
+                .filter(e -> e.getFechaDeLanzamiento() != null && e.getFechaDeLanzamiento().isAfter(fechaBusqueda))
+                .forEach(e -> System.out.println(
+                        "Temporada: " + e.getTemporada() +
+                                ", Episodio: " + e.getTitulo() +
+                                ", Fecha de lanzamiento: " + e.getFechaDeLanzamiento().format(dtf)
+                ));
     }
 }
