@@ -9,10 +9,7 @@ import com.ausadev.screenmatch.service.ConvierteDatos;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -63,7 +60,9 @@ public class Principal {
         System.out.println("Este es el top 5 con mas puntaje de episodios: ");
         datosEpisodios.stream()
                 .filter(e -> !e.evaluacion().equalsIgnoreCase("N/A"))
+                .peek(e -> System.out.println("Primer filtro: N/A" + e))
                 .sorted(Comparator.comparing(DatosEpisodio::evaluacion).reversed())
+                .peek(e -> System.out.println("Segundo filtro: ordenando" + e))
                 .limit(5)
                 .forEach(System.out::println);
 
@@ -78,10 +77,10 @@ public class Principal {
 
         //buscando episodios por fecha ingresada
         System.out.println("Ingrese el año de filtrado");
-        var fecha = teclado.nextInt();
+        var fecha = teclado.nextLine();
 
         // LocalDate.of() recieb 3 parametros yyyy-MM-dd
-        LocalDate fechaBusqueda = LocalDate.of(fecha, 1, 1);
+        LocalDate fechaBusqueda = LocalDate.of(Integer.parseInt(fecha), 1, 1);
         //formateando la fecha a tipo LATAM dd-MM-yyyy con el metodo DateTimeFormatter.ofPattern()
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -92,5 +91,23 @@ public class Principal {
                                 ", Episodio: " + e.getTitulo() +
                                 ", Fecha de lanzamiento: " + e.getFechaDeLanzamiento().format(dtf)
                 ));
+
+        //Busqueda de titulo por ingreso parcial del usuario
+        System.out.println("Ingrese el titulo o parte del titulo a buscar");
+        var nombreTitulo = teclado.nextLine();
+        Optional<Episodio> episodioBuscado = episodios.stream()
+                //uso el upperCase para hacer match de los que existen y el buscado
+                .filter(e -> e.getTitulo().toUpperCase().contains(nombreTitulo.toUpperCase()))
+                .findFirst();
+
+        // si existe un titulo lo muestro sino muestro otro msj
+        if (episodioBuscado.isPresent()) {
+            System.out.println("Titulo encontrado");
+            System.out.println("Datos del episodio encontrado: " + episodioBuscado.get());
+        }
+        else {
+            System.out.println("Titulo no encontrado");
+        }
+
     }
 }
