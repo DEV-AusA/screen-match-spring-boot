@@ -1,10 +1,17 @@
 package com.ausadev.screenmatch.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.OptionalDouble;
 
+@Entity
+@Table(name="series")
 public class Serie {
+    @Id
+    @GeneratedValue
+    private Long Id;
     private String titulo;
     private Integer totalDeTemporadas;
     private Double evaluacion;
@@ -12,6 +19,8 @@ public class Serie {
     private String sinopsis;
     private String poster;
     private String actores;
+    @Transient
+    private List<Episodio> episodios;
 
     public Serie(DatosSerie datosSerie) {
         this.titulo = datosSerie.titulo();

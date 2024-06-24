@@ -1,6 +1,7 @@
 package com.ausadev.screenmatch.principal;
 
 import com.ausadev.screenmatch.model.*;
+import com.ausadev.screenmatch.repository.SerieRepository;
 import com.ausadev.screenmatch.service.ConsumoAPI;
 import com.ausadev.screenmatch.service.ConvierteDatos;
 
@@ -16,6 +17,11 @@ public class Principal {
     ConsumoAPI consumoApi = new ConsumoAPI();
     ConvierteDatos convierteDatos = new ConvierteDatos();
     List<DatosSerie> datosSeries = new ArrayList<>();
+    private SerieRepository repositorio;
+
+    public Principal(SerieRepository repository) {
+        this.repositorio = repository;
+    }
 
     public void muestraElMenu() {
         var opcion = -1;
@@ -74,7 +80,9 @@ public class Principal {
 
     private void buscarSerieWeb() {
         DatosSerie datos = getDatosSerie();
-        datosSeries.add(datos);
+        Serie serie = new Serie(datos);
+        repositorio.save(serie);
+//        datosSeries.add(datos);
         System.out.println(datos);
     }
 
