@@ -9,6 +9,7 @@ public class Episodio {
     private Integer numeroEpisodio;
     private Double evaluacion;
     private LocalDate fechaDeLanzamiento;
+    private Serie serie;
 
     public Episodio(Integer numero, DatosEpisodio d) {
         this.temporada = numero;
