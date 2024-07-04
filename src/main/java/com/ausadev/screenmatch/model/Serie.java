@@ -10,8 +10,9 @@ import java.util.OptionalDouble;
 @Table(name="series")
 public class Serie {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
     private String titulo;
     private Integer totalDeTemporadas;
     private Double evaluacion;
@@ -19,6 +20,7 @@ public class Serie {
     private String sinopsis;
     private String poster;
     private String actores;
+    // mapeado por el atributo serie de la clase Episodio
     @OneToMany(mappedBy = "serie")
     private List<Episodio> episodios;
 
