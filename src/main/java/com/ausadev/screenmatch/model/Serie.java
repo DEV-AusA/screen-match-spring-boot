@@ -21,7 +21,7 @@ public class Serie {
     private String poster;
     private String actores;
     // mapeado por el atributo serie de la clase Episodio
-    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Episodio> episodios;
 
     public Serie() {
@@ -113,6 +113,7 @@ public class Serie {
                 ", evaluacion=" + evaluacion +
                 ", sinopsis='" + sinopsis + '\'' +
                 ", poster='" + poster + '\'' +
-                ", actores='" + actores + '\'';
+                ", actores='" + actores + '\'' +
+                ", episodios='" + episodios + '\'';
     }
 }
