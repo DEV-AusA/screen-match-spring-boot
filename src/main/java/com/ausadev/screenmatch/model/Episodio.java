@@ -98,4 +98,8 @@ public class Episodio {
                 ", evaluacion=" + evaluacion +
                 ", fechaDeLanzamiento=" + fechaDeLanzamiento;
     }
+
+    public Serie getSerie() {
+        return serie;
+    }
 }
