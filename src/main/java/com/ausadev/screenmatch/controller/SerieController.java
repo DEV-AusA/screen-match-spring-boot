@@ -46,4 +46,10 @@ public class SerieController {
     public List<EpisodioDTO> obtenerTodasLasTemporadas(@PathVariable Long id){
         return servicio.obtenerTodasLasTemporadas(id);
     }
+
+    @GetMapping("/{id}/temporadas/{numeroTemporada}")
+    // las variables del path tienen que llamarse IGUAL en el metodo
+    public List<EpisodioDTO> obtenerTemporadasPorNumero(@PathVariable Long id, @PathVariable Long numeroTemporada){
+        return servicio.obtenerTemporadasPorNumero(id, numeroTemporada);
+    }
 }

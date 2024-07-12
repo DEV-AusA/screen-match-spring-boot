@@ -42,7 +42,6 @@ public class SerieService {
             Serie s = serie.get();
             return new SerieDTO( s.getId(), s.getTitulo(), s.getTotalDeTemporadas(), s.getEvaluacion(), s.getGenero(), s.getSinopsis(), s.getPoster(), s.getActores());
         }
-
         return null;
     }
 
@@ -54,5 +53,13 @@ public class SerieService {
                     .collect(Collectors.toList());
         }
         return null;
+    }
+
+    public List<EpisodioDTO> obtenerTemporadasPorNumero(Long id, Long numeroTemporada) {
+        //puedo obtener los datos directamente con el findAll o con JPQL
+        //lo traigo con el JPQL
+        return repository.obtenerTemporadasPorNumero(id, numeroTemporada).stream()
+                .map(e -> new EpisodioDTO(e.getTemporada(), e.getTitulo(), e.getNumeroEpisodio()))
+                .collect(Collectors.toList());
     }
 }
