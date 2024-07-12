@@ -2,6 +2,7 @@ package com.ausadev.screenmatch.service;
 
 import com.ausadev.screenmatch.dto.EpisodioDTO;
 import com.ausadev.screenmatch.dto.SerieDTO;
+import com.ausadev.screenmatch.model.Categoria;
 import com.ausadev.screenmatch.model.Serie;
 import com.ausadev.screenmatch.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,11 @@ public class SerieService {
         return repository.obtenerTemporadasPorNumero(id, numeroTemporada).stream()
                 .map(e -> new EpisodioDTO(e.getTemporada(), e.getTitulo(), e.getNumeroEpisodio()))
                 .collect(Collectors.toList());
+    }
+
+    public List<SerieDTO> obtenerSeriesPorCategoria(String nombreGenero) {
+        //usando las categorias declaradas como enum
+        Categoria categoria = Categoria.fromEspanol((nombreGenero));
+        return convierteDatos(repository.findByGenero(categoria));
     }
 }
