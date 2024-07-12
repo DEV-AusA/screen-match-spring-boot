@@ -104,6 +104,14 @@ public class Serie {
         this.actores = actores;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
     @Override
     public String toString() {
         return
